@@ -3,18 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCQ Quiz</title>
+  <title>MCQ Quiz App</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>MCQ Practice Quiz</h1>
-    <p class="subtitle">Click one option to check the answer instantly</p>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h1>MCQ Practice Quiz</h1>
+        <p class="subtitle">Click one option to check the answer instantly</p>
+      </div>
+      <div class="stats">
+        <div class="stat-card">
+          <span class="stat-label">Score</span>
+          <span class="stat-value" id="score">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Answered</span>
+          <span class="stat-value"><span id="answered">0</span>/<span id="total">0</span></span>
+        </div>
+      </div>
+    </header>
 
-    <div id="quiz-container"></div>
+    <main id="quiz-container" class="quiz-container"></main>
 
-    <div class="score-box">
-      <h2>Score: <span id="score">0</span></h2>
+    <div class="bottom-actions">
+      <button id="resetBtn" class="reset-btn">Reset Quiz</button>
     </div>
   </div>
 
