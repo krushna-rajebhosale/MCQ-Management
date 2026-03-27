@@ -640,3 +640,89 @@ const quizData = [
     answer: 0
   }
 ];
+
+const quizContainer = document.getElementById("quiz-container");
+const scoreElement = document.getElementById("score");
+const answeredElement = document.getElementById("answered");
+const totalElement = document.getElementById("total");
+const resetBtn = document.getElementById("resetBtn");
+
+let score = 0;
+let answeredCount = 0;
+
+totalElement.textContent = quizData.length;
+
+function createQuiz() {
+  quizContainer.innerHTML = "";
+  score = 0;
+  answeredCount = 0;
+
+  scoreElement.textContent = score;
+  answeredElement.textContent = answeredCount;
+  totalElement.textContent = quizData.length;
+
+  quizData.forEach((item, qIndex) => {
+    const card = document.createElement("div");
+    card.className = "question-card";
+
+    const number = document.createElement("div");
+    number.className = "question-number";
+    number.textContent = `Question ${qIndex + 1}`;
+
+    const question = document.createElement("div");
+    question.className = "question-text";
+    question.textContent = item.question;
+
+    const optionsBox = document.createElement("div");
+    optionsBox.className = "options";
+
+    const resultBox = document.createElement("div");
+    resultBox.className = "result-box";
+
+    item.options.forEach((optionText, optionIndex) => {
+      const button = document.createElement("button");
+      button.className = "option-btn";
+      button.innerHTML = `<strong>${String.fromCharCode(65 + optionIndex)}.</strong> ${optionText}`;
+
+      button.addEventListener("click", () => {
+        const allButtons = optionsBox.querySelectorAll(".option-btn");
+
+        allButtons.forEach((btn, index) => {
+          btn.disabled = true;
+
+          if (index === item.answer) {
+            btn.classList.add("correct");
+          }
+        });
+
+        answeredCount++;
+        answeredElement.textContent = answeredCount;
+
+        if (optionIndex === item.answer) {
+          button.classList.add("correct");
+          resultBox.textContent = "Correct answer";
+          resultBox.className = "result-box correct-msg";
+          score++;
+          scoreElement.textContent = score;
+        } else {
+          button.classList.add("wrong");
+          resultBox.textContent = `Wrong answer. Correct option is ${String.fromCharCode(65 + item.answer)}.`;
+          resultBox.className = "result-box wrong-msg";
+        }
+      });
+
+      optionsBox.appendChild(button);
+    });
+
+    card.appendChild(number);
+    card.appendChild(question);
+    card.appendChild(optionsBox);
+    card.appendChild(resultBox);
+
+    quizContainer.appendChild(card);
+  });
+}
+
+resetBtn.addEventListener("click", createQuiz);
+
+createQuiz();
